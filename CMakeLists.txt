@@ -3,12 +3,12 @@ add_subdirectory("lua-5.2.4")
 
 
 include_directories(src lua-5.2.4/src)
-SET(CMAKE_EXE_LINKER_FLAGS "-static-libstdc++")
 
 option(SOL_EXAMPLES "add sol examples" ON)
 
 if(SOL_EXAMPLES)
 
+    SET(CMAKE_EXE_LINKER_FLAGS "-static-libstdc++")
 
     add_executable(basic examples/basic.cpp)
     target_link_libraries(basic lua_static)
