@@ -44,6 +44,10 @@ public:
 
 };
 
+void print_hello_world(){
+    std::cout << "hello world\n";
+}
+
 int main() {
     sol::state lua;
     lua.open_libraries(sol::lib::base, sol::lib::math);
@@ -54,15 +58,30 @@ int main() {
     sol::constructors<sol::types<>, sol::types<GameAcount,int,int>> player_ctor;
     lua.new_userdata<Player>("Player",player_ctor,"acount",&Player::acount,"position_y",&Player::position_x,"position_y",&Player::position_y,"talk",&Player::talk,"make_math",&Player::make_math);
 
-
+    lua.set_function("print_hello_world",print_hello_world);
     
+    lua["random_number"] = 16;
     
     lua.script(
+
+        "print_hello_world()\n"
         "acount = GameAcount.new(\"alan\",\"123\")\n"
         "player = Player.new(acount,64,128)\n"
         "player:talk()\n"
         "math_value = player:make_math(2,2)\n"
         "print(\"2 + 2 is: \", math_value)\n"
-    
+        
+        "function say()\n"
+        "   print(\"some thing\")\n"
+        "end\n"
+
+        "print(\"lua\",random_number)"
     );
+
+    std::cout << "c++ " << lua.get<int>("random_number") << "\n";
+
+    lua.get<sol::function>("say")();
+
+    
+
 }
