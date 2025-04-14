@@ -1,6 +1,6 @@
-add_subdirectory("libs/lua-5.2.4")
+add_subdirectory("lua-5.2.4")
 
-include_directories(src libs/lua-5.2.4/src)
+include_directories(src lua-5.2.4/src)
 SET(CMAKE_EXE_LINKER_FLAGS "-static-libstdc++")
 
 add_executable(basic examples/basic.cpp)
