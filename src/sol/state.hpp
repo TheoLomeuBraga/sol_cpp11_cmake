@@ -43,7 +43,7 @@ enum class lib : char {
     math,
     table,
     debug,
-    bit32,
+    utf8,
     io,
     count
 };
@@ -101,8 +101,8 @@ public:
                 luaL_requiref(L.get(), "math", luaopen_math, 1);
                 lua_pop(L.get(), 1);
                 break;
-            case lib::bit32:
-                luaL_requiref(L.get(), "bit32", luaopen_bit32, 1);
+            case lib::utf8:
+                luaL_requiref(L.get(), "utf8", luaopen_utf8, 1);
                 lua_pop(L.get(), 1);
                 break;
             case lib::io:

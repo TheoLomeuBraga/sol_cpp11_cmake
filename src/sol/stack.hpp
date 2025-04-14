@@ -97,7 +97,7 @@ struct getter {
 
     template<typename U = T, EnableIf<std::is_integral<U>, std::is_signed<U>> = 0>
     static U get(lua_State* L, int index = -1) {
-        return static_cast<U>(lua_tounsigned(L, index));
+        return static_cast<U>(lua_tointegerx(L, index,NULL));
     }
 
     template<typename U = T, EnableIf<std::is_integral<U>, std::is_unsigned<U>> = 0>

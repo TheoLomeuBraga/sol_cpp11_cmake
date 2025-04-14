@@ -1,10 +1,12 @@
-add_subdirectory("lua-5.2.4")
+add_subdirectory("lua")
 
 
 
-include_directories(src lua-5.2.4/src)
+include_directories(src lua/src)
 
 option(SOL_EXAMPLES "add sol examples" ON)
+
+
 
 if(SOL_EXAMPLES)
 
