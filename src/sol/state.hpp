@@ -129,6 +129,10 @@ public:
         }
     }
 
+    void collectgarbage(){
+        lua_gc(L.get(),LUA_GCCOLLECT);
+    }
+
     void open_file(const std::string& filename) {
         if(luaL_dofile(L.get(), filename.c_str())) {
             lua_error(L.get());

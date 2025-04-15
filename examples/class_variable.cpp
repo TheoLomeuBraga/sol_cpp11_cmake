@@ -34,6 +34,8 @@ public:
 
     }
 
+    ~Player() {std::cout << "acount deleted\n";}
+
     void talk(){
         std::cout << "hello my name is " << acount.user_name << "\n";
     }
@@ -78,7 +80,10 @@ int main() {
         "math_value = player:make_math(2,2)\n"
         "print(\"2 + 2 is: \", math_value)\n"
 
+        "player = nil\n"
+
     );
+    lua.collectgarbage();
 
     lua.script(
 
