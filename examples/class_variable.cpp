@@ -48,9 +48,11 @@ void print_hello_world(){
     std::cout << "hello world\n";
 }
 
+
+
 int main() {
     sol::state lua;
-    lua.open_libraries(sol::lib::base, sol::lib::math);
+    lua.open_libraries(sol::lib::base, sol::lib::math,sol::lib::utf8);
 
     sol::constructors<sol::types<>, sol::types<std::string,std::string>> game_acount_ctor;
     lua.new_userdata<GameAcount>("GameAcount",game_acount_ctor, "user_name", &GameAcount::user_name, "pass_word", &GameAcount::pass_word);
@@ -60,7 +62,11 @@ int main() {
 
     lua.set_function("print_hello_world",print_hello_world);
     
-    lua["random_number"] = 16;
+
+
+
+
+
     
     lua.script(
 
@@ -68,20 +74,53 @@ int main() {
         "acount = GameAcount.new(\"alan\",\"123\")\n"
         "player = Player.new(acount,64,128)\n"
         "player:talk()\n"
+
         "math_value = player:make_math(2,2)\n"
         "print(\"2 + 2 is: \", math_value)\n"
-        
+
+    );
+
+    lua.script(
+
         "function say()\n"
         "   print(\"some thing\")\n"
         "end\n"
 
-        "print(\"lua\",random_number)"
     );
-
-    std::cout << "c++ " << lua.get<int>("random_number") << "\n";
-
     lua.get<sol::function>("say")();
 
-    
+    lua["random_number"] = 16;
+    lua.script(
+        "print(\"lua\",random_number)"
+    );
+    std::cout << "c++ " << lua.get<int>("random_number") << "\n";
+
+
+
+
+
+
+    int *pointable_number = new int(39);
+    lua["pointable_number"] = *pointable_number;
+    std::cout << "pointable_number " << lua.get<int>("pointable_number") << "\n";
+
+
+    lua.script(
+        "pointable_number = pointable_number + 10\n"
+        "print(\"pointable_number\",pointable_number)\n"
+    );
+
+    std::cout << "pointable_number on lua " << lua.get<int>("pointable_number") << "    "  << "pointable_number on c++ " << *pointable_number << "\n";
+
+    delete pointable_number;
+
+
+    lua.script(
+        "text = \"ã§êúì\"\n"
+        "print(text)\n"
+    );
+
+    std::cout << lua.get<std::string>("text") << "\n";
+
 
 }
