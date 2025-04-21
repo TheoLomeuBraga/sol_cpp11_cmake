@@ -29,8 +29,6 @@ void nothing(lua_State *L){}
 
 void add_lib(lua_State *L){
     sol::state lua(L,nothing);
-    lua.open_libraries(sol::lib::base, sol::lib::math,sol::lib::utf8);
-
     
     sol::constructors<sol::types<>, sol::types<std::string,std::string>> game_acount_ctor;
     lua.new_userdata<GameAcount>("GameAcount",game_acount_ctor, "user_name", &GameAcount::user_name, "pass_word", &GameAcount::pass_word,"talk",&GameAcount::talk);
