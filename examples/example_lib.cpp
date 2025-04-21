@@ -45,5 +45,5 @@ void add_lib(lua_State *L){
 extern "C" EXPORT int luaopen_libexamplelib(lua_State *L)
 {
     add_lib(L);
-    return 1;
+    return 0;
 }
