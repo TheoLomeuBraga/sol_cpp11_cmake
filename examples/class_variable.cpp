@@ -15,6 +15,7 @@ public:
         this->pass_word = pass_word;
         std::cout << user_name << "'s acount created\n";
     }
+    ~GameAcount() {std::cout << "acount deleted\n";}
 };
 
 class Player{
@@ -34,7 +35,7 @@ public:
 
     }
 
-    ~Player() {std::cout << "acount deleted\n";}
+    
 
     void talk(){
         std::cout << "hello my name is " << acount.user_name << "\n";

@@ -32,7 +32,7 @@ typedef enum {
   VKFLT,  /* floating constant; nval = numerical float value */
   VKINT,  /* integer constant; ival = numerical integer value */
   VKSTR,  /* string constant; strval = TString address;
-             (string is fixed by the scanner) */
+             (string is fixed by the lexer) */
   VNONRELOC,  /* expression has its value in a fixed register;
                  info = result register */
   VLOCAL,  /* local variable; var.ridx = register index;
@@ -112,7 +112,7 @@ typedef struct Labeldesc {
   int pc;  /* position in code */
   int line;  /* line where it appeared */
   lu_byte nactvar;  /* number of active variables in that position */
-  lu_byte close;  /* true for goto that escapes upvalues */
+  lu_byte close;  /* goto that escapes upvalues */
 } Labeldesc;
 
 
@@ -146,7 +146,6 @@ typedef struct FuncState {
   struct FuncState *prev;  /* enclosing function */
   struct LexState *ls;  /* lexical state */
   struct BlockCnt *bl;  /* chain of current blocks */
-  Table *kcache;  /* cache for reusing constants */
   int pc;  /* next position to code (equivalent to 'ncode') */
   int lasttarget;   /* 'label' of last 'jump label' */
   int previousline;  /* last line that was saved in 'lineinfo' */
@@ -164,9 +163,7 @@ typedef struct FuncState {
 } FuncState;
 
 
-LUAI_FUNC lu_byte luaY_nvarstack (FuncState *fs);
-LUAI_FUNC void luaY_checklimit (FuncState *fs, int v, int l,
-                                const char *what);
+LUAI_FUNC int luaY_nvarstack (FuncState *fs);
 LUAI_FUNC LClosure *luaY_parser (lua_State *L, ZIO *z, Mbuffer *buff,
                                  Dyndata *dyd, const char *name, int firstchar);
 
